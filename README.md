@@ -6,7 +6,19 @@ This software is provided as-is and for forensic purposes only. Use at your own 
 
 ## Usage
 
-1. Download the `search-win.bat` for Windows or `search-bash.sh` for Linux and macOS (requires `bash`)
+1. Download the script for your operating system
+
+    ### Windows
+
+    [search-win.bat](search-win.bat)
+
+    ### macOS
+
+    [search-mac.sh](search-mac.sh)
+
+    ### Linux
+
+    [search-bash.sh](search-bash)
 
 2. Run the script from the command line
 
@@ -16,7 +28,14 @@ This software is provided as-is and for forensic purposes only. Use at your own 
     search-win.bat
     ```
 
-    ### Linux and macOS
+    ### macOS
+
+    ```bash
+    chmod +x search-mac.sh
+    ./search-mac.sh
+    ```
+
+    ### Linux
 
     ```bash
     chmod +x search-bash.sh
