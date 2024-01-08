@@ -184,6 +184,37 @@ function search() {
 
     echo -e "${NEWLINE}Search complete. $results_count results found.${NEWLINE}"
     echo -e "Results saved to $filename${NEWLINE}"
+
+    # Ask the user if they want to copy the results to a path
+    copy_results_to_path
+}
+
+#############################################
+# Common utility functions
+#############################################
+
+function copy_results_to_path() {
+    read -p "Do you want to copy the results to a path? (y/n): " copy_results_to_path_option
+    case $copy_results_to_path_option in
+        y|Y) ;; # continue
+        n|N) exit ;; # exit
+        *) echo -e "${RED}Error: Invalid option.${ENDCOLOR}" ; copy_results_to_path ;;
+    esac
+
+    # Ask the user for the path
+    read -p "Enter the path to copy the results to: " copy_results_to_path
+
+    # Check if the path exists
+    if check_path "$copy_results_to_path"; then
+        # Copy every file in the results file to the path
+        while read -r line; do
+            cp "$line" "$copy_results_to_path"
+        done < "$filename"
+        echo -e "${GREEN}Results copied to $copy_results_to_path.${ENDCOLOR}"
+    else
+        echo -e "${RED}Error: The path does not exist.${ENDCOLOR}"
+        copy_results_to_path
+    fi
 }
 
 #############################################
