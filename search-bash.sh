@@ -24,6 +24,16 @@ ENDCOLOR="\033[0m"   # Reset
 NEWLINE="\n"         # New line
 
 #############################################
+# Miscelaneous global variables
+#############################################
+
+OPERATING_SYSTEM=$(uname -s)
+DEFAULT_DRIVE_PATH_MAC="/System/Volumes/Data"
+DEFAULT_DRIVE_PATH_LINUX="/"
+DEFAULT_SEARCH_PATH_MAC="/System/Volumes/Data/Users"
+DEFAULT_SEARCH_PATH_LINUX="/home"
+
+#############################################
 # Main menu and prerequisites
 #############################################
 
@@ -32,7 +42,7 @@ function main_menu() {
     check_sudo
     check_compatibilty
     clear
-    echo "Search Mac"
+    echo "Search $OPERATING_SYSTEM"
     echo "---------"
     echo Select an option:
     echo "1) Search a volume"
@@ -88,15 +98,29 @@ function select_volume() {
     done <<< "$volumes"
 
     # Read the user input
-    read -p "Select a volume by index or press enter to use the default volume (/System/Volumes/Data): " selected_volume_index
+    if [[ $OPERATING_SYSTEM == "Linux" ]]; then
+        read -p "Select a volume by index or press enter to use the default volume ($DEFAULT_DRIVE_PATH_LINUX): " selected_volume_index
+    else
+        read -p "Select a volume by index or press enter to use the default volume ($DEFAULT_DRIVE_PATH_MAC): " selected_volume_index
+    fi
+    #read -p "Select a volume by index or press enter to use the default volume (/System/Volumes/Data): " selected_volume_index
 
     # If the user didn't select a volume, use the default volume
     if [[ -z $selected_volume_index ]]; then
-        volume_path="/System/Volumes/Data"
+        # Use the default volume
+        volume_path=$DEFAULT_DRIVE_PATH_MAC
+        if [[ $OPERATING_SYSTEM == "Linux" ]]; then
+            volume_path=$DEFAULT_DRIVE_PATH_LINUX
+        fi
     else
         while [[ ! $selected_volume_index =~ ^[0-9]+$ ]] || [[ $selected_volume_index -lt 1 ]] || [[ $selected_volume_index -gt $i ]]; do
             echo -e "${RED}Error: Invalid volume index.${ENDCOLOR}"
-            read -p "Select a volume by index or press enter to use the default volume (/System/Volumes/Data): " selected_volume_index
+            # read -p "Select a volume by index or press enter to use the default volume (/System/Volumes/Data): " selected_volume_index
+            if [[ $OPERATING_SYSTEM == "Linux" ]]; then
+                read -p "Select a volume by index or press enter to use the default volume ($DEFAULT_DRIVE_PATH_LINUX): " selected_volume_index
+            else
+                read -p "Select a volume by index or press enter to use the default volume ($DEFAULT_DRIVE_PATH_MAC): " selected_volume_index
+            fi
         done
         # Remove the first two characters from the volume path
         volume_path=${volumes_array[$selected_volume_index]:3}
@@ -118,10 +142,18 @@ function list_mounted_drives() {
 # Search a path
 function select_path() {
     while true; do
-        read -p "Enter a path to search or press enter to use the default path (/Users): " search_path
+        # read -p "Enter a path to search or press enter to use the default path (/Users): " search_path
+        if [[ $OPERATING_SYSTEM == "Linux" ]]; then
+            read -p "Enter a path to search or press enter to use the default path ($DEFAULT_SEARCH_PATH_LINUX): " search_path
+        else
+            read -p "Enter a path to search or press enter to use the default path ($DEFAULT_SEARCH_PATH_MAC): " search_path
+        fi
         if [[ -z $search_path ]]; then
             # Use the full Users path on Mac
-            search_path="/System/Volumes/Data/Users" 
+            search_path=$DEFAULT_SEARCH_PATH_MAC
+            if [[ $OPERATING_SYSTEM == "Linux" ]]; then
+                search_path=$DEFAULT_SEARCH_PATH_LINUX
+            fi
         fi
 
         # Check if the path exists
@@ -185,8 +217,10 @@ function search() {
     echo -e "${NEWLINE}Search complete. $results_count results found.${NEWLINE}"
     echo -e "Results saved to $filename${NEWLINE}"
 
-    # Ask the user if they want to copy the results to a path
-    copy_results_to_path
+    # Ask the user if they want to copy the results to a path if results were found
+    if [[ $results_count -gt 0 ]]; then
+        copy_results_to_path
+    fi
 }
 
 #############################################
