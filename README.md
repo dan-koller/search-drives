@@ -14,7 +14,7 @@ This software is provided as-is and for forensic purposes only. Use at your own 
 
     ### macOS & Linux\*
 
-    [search-bash.sh](search-bash)
+    [search-bash.sh](search-bash.sh)
 
 2. Run the script from the command line
 
