@@ -2,14 +2,15 @@
 
 #############################################
 # This script searches for files and/or paths
-# in a Mac. Select a volume or a path and 
-# specify the file or pattern to search for.
-# For forensic purposes only. Use at your own
-# risk.
+# on macOS and Linux. Select a volume or a
+# path and specify the file or pattern to
+# search for. For forensic purposes only. Use
+# at your own risk.
 #
 # Author: Dan Koller
 # Date: 07.01.2024
 # Version: 1.0
+# License: MIT
 #############################################
 
 #############################################
@@ -24,14 +25,13 @@ ENDCOLOR="\033[0m"   # Reset
 NEWLINE="\n"         # New line
 
 #############################################
-# Miscelaneous global variables
+# Global variables
 #############################################
 
 OPERATING_SYSTEM=$(uname -s)
 DEFAULT_DRIVE_PATH_MAC="/System/Volumes/Data"
 DEFAULT_DRIVE_PATH_LINUX="/"
-DEFAULT_SEARCH_PATH_MAC="/System/Volumes/Data/Users"
-DEFAULT_SEARCH_PATH_LINUX="/home"
+DEFAULT_SEARCH_PATH=$(echo $HOME)
 
 #############################################
 # Main menu and prerequisites
@@ -103,7 +103,6 @@ function select_volume() {
     else
         read -p "Select a volume by index or press enter to use the default volume ($DEFAULT_DRIVE_PATH_MAC): " selected_volume_index
     fi
-    #read -p "Select a volume by index or press enter to use the default volume (/System/Volumes/Data): " selected_volume_index
 
     # If the user didn't select a volume, use the default volume
     if [[ -z $selected_volume_index ]]; then
@@ -115,7 +114,6 @@ function select_volume() {
     else
         while [[ ! $selected_volume_index =~ ^[0-9]+$ ]] || [[ $selected_volume_index -lt 1 ]] || [[ $selected_volume_index -gt $i ]]; do
             echo -e "${RED}Error: Invalid volume index.${ENDCOLOR}"
-            # read -p "Select a volume by index or press enter to use the default volume (/System/Volumes/Data): " selected_volume_index
             if [[ $OPERATING_SYSTEM == "Linux" ]]; then
                 read -p "Select a volume by index or press enter to use the default volume ($DEFAULT_DRIVE_PATH_LINUX): " selected_volume_index
             else
@@ -142,18 +140,9 @@ function list_mounted_drives() {
 # Search a path
 function select_path() {
     while true; do
-        # read -p "Enter a path to search or press enter to use the default path (/Users): " search_path
-        if [[ $OPERATING_SYSTEM == "Linux" ]]; then
-            read -p "Enter a path to search or press enter to use the default path ($DEFAULT_SEARCH_PATH_LINUX): " search_path
-        else
-            read -p "Enter a path to search or press enter to use the default path ($DEFAULT_SEARCH_PATH_MAC): " search_path
-        fi
+        read -p "Enter a path to search or press enter to use the default path ($DEFAULT_SEARCH_PATH): " search_path
         if [[ -z $search_path ]]; then
-            # Use the full Users path on Mac
-            search_path=$DEFAULT_SEARCH_PATH_MAC
-            if [[ $OPERATING_SYSTEM == "Linux" ]]; then
-                search_path=$DEFAULT_SEARCH_PATH_LINUX
-            fi
+            search_path=$DEFAULT_SEARCH_PATH
         fi
 
         # Check if the path exists
