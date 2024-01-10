@@ -12,11 +12,7 @@ This software is provided as-is and for forensic purposes only. Use at your own 
 
     [search-win.bat](search-win.bat)
 
-    ### macOS
-
-    [search-mac.sh](search-mac.sh)
-
-    ### Linux
+    ### macOS & Linux\*
 
     [search-bash.sh](search-bash)
 
@@ -28,19 +24,16 @@ This software is provided as-is and for forensic purposes only. Use at your own 
     search-win.bat
     ```
 
-    ### macOS
+    ### macOS & Linux\*
 
-    ```bash
-    chmod +x search-mac.sh
-    ./search-mac.sh
-    ```
-
-    ### Linux
+    _Requires Bash 3.2 or higher. Check your version with `bash --version`._
 
     ```bash
     chmod +x search-bash.sh
     ./search-bash.sh
     ```
+
+    _\*) The script was tested on macOS, Ubuntu, and WSL on Windows 10. However, there may be differences when using default directories like `C:\Users\` on Windows, `/home/` on Linux, or `/Users/` on macOS. If you encounter any issues, please open an issue on GitHub._
 
 3. Follow the instructions on the screen
 

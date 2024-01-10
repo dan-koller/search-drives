@@ -2,6 +2,7 @@
 :: Author: Dan Koller
 :: Date: 02.01.2024
 :: Version: 1.0
+:: License: MIT
 
 @echo off
 setlocal enabledelayedexpansion
