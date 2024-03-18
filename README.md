@@ -1,10 +1,8 @@
 # Search Drives
 
-This is a collection of scripts to search for files on a drive or in a directory. This includes searching for files by name or patterns like `*.txt` or `*.jpg`. The results are saved to a text file including the full path to the file. You can then choose to copy all results to a new directory. No external libraries, installation or admin rights\* are required.
+This is a collection of scripts to search for files on a drive or in a directory. This includes searching for files by name or patterns like `*.txt` or `*.jpg`. The results are saved to a text file including the full path to the file. You can then choose to copy all results to a new directory.
 
-This software is provided as-is and for forensic purposes only. Use at your own risk.
-
-_\* To access certain directories, you may need admin rights depending on your operating system and the directory you want to search._
+_To access certain directories, you may need admin rights depending on your operating system and the directory you want to search._
 
 ## Usage
 
@@ -16,11 +14,16 @@ I recommend to use the Python script, as it is the most flexible and easiest to 
 
 1. Download the Python script [search.py](search.py)
 
-2. Run the script from the command line
+2. Install the required packages and run the script from the command line
 
     ```bash
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
     python search.py
     ```
+
+    _On macOS and Linux, you may need to use `python3` instead of `python`._
 
 3. Follow the instructions on the screen
 

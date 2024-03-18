@@ -4,8 +4,7 @@
 # This script searches for files and/or paths
 # on macOS and Linux. Select a volume or a
 # path and specify the file or pattern to
-# search for. For forensic purposes only. Use
-# at your own risk.
+# search for.
 #
 # Author: Dan Koller
 # Date: 07.01.2024
