@@ -33,7 +33,7 @@ I recommend to use the Python script, as it is the most flexible and easiest to 
 
     - Windows: [search-win.bat](shell-scripts/search-win.bat)
 
-    - macOS & Linux\*\*: [search-bash.sh](shell-scripts/search-bash.sh)
+    - macOS & Linux\*: [search-bash.sh](shell-scripts/search-bash.sh)
 
 2. Run the script from the command line
 
@@ -43,7 +43,7 @@ I recommend to use the Python script, as it is the most flexible and easiest to 
         search-win.bat
         ```
 
-    - macOS & Linux\*\*
+    - macOS & Linux\*
 
         _Requires Bash 3.2 or higher. Check your version with `bash --version`._
 
@@ -52,7 +52,7 @@ I recommend to use the Python script, as it is the most flexible and easiest to 
         ./search-bash.sh
         ```
 
-        _\*\*) The script was tested on macOS, Ubuntu, and WSL on Windows 10. However, there may be differences when using default directories like `C:\Users\` on Windows, `/home/` on Linux, or `/Users/` on macOS. If you encounter any problems, please open an issue on GitHub._
+        _\*) The script was tested on macOS, Ubuntu, and WSL on Windows 10. However, there may be differences when using default directories like `C:\Users\` on Windows, `/home/` on Linux, or `/Users/` on macOS. If you encounter any problems, please open an issue on GitHub._
 
 3. Follow the instructions on the screen
 
